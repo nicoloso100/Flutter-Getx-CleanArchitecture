@@ -10,9 +10,24 @@ import 'package:get/get.dart';
 import 'home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
+  Widget getPopularList() {
+    return Container(
+      height: 200,
+      color: Colors.red,
+    );
+  }
+
+  Widget getTopRated() {
+    return Container(
+      height: 200,
+      color: Colors.blue,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         backgroundColor: blueLight,
         appBar: AppBar(
           backgroundColor: blueLight,
@@ -30,7 +45,13 @@ class HomeView extends GetView<HomeController> {
           ),
         ),
         body: Column(
-          children: [Header(), MoviesList()],
+          children: [
+            Header(controller: controller),
+            MoviesList(
+              popularList: getPopularList(),
+              topRated: getTopRated(),
+            )
+          ],
         ));
   }
 }

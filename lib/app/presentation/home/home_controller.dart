@@ -3,6 +3,19 @@ import 'package:get/get.dart';
 
 class HomeController extends GetxController {
   final isDarkMode = false.obs;
+  late TextEditingController searchController;
+
+  @override
+  void onInit() {
+    super.onInit();
+    searchController = TextEditingController();
+  }
+
+  @override
+  void onClose() {
+    searchController.dispose();
+    super.onClose();
+  }
 
   void onChangeTheme(bool value) {
     if (value == true) {
