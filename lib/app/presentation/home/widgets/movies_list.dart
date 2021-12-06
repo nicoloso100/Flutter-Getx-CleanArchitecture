@@ -74,10 +74,13 @@ class MoviesList extends StatelessWidget {
                         scrollDirection: Axis.horizontal,
                         pagingController: controller.pagingTopRated,
                         builderDelegate: PagedChildBuilderDelegate<MovieCover>(
-                          itemBuilder: (context, item, index) => MovieCard(
-                              image: item.backdrop,
-                              name: item.name,
-                              rating: item.rating),
+                          itemBuilder: (context, item, index) => InkWell(
+                            onTap: () => controller.onSelectMovie(item.id),
+                            child: MovieCard(
+                                image: item.backdrop,
+                                name: item.name,
+                                rating: item.rating),
+                          ),
                         ),
                       ),
                     )

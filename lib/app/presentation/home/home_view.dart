@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movies/app/core/assets/constants.dart';
 import 'package:flutter_movies/app/core/widgets/drawer_content.dart';
-import 'package:flutter_movies/app/domain/entities/movie_cover.dart';
 import 'package:flutter_movies/app/presentation/home/widgets/header.dart';
-import 'package:flutter_movies/app/presentation/home/widgets/movie_card.dart';
 import 'package:flutter_movies/app/presentation/home/widgets/movies_list.dart';
 import 'package:flutter_movies/app/presentation/home/widgets/search_movies_list.dart';
 import 'package:flutter_movies/app/theme/colors.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 import 'package:get/get.dart';
 
@@ -16,6 +13,8 @@ import 'home_controller.dart';
 class HomeView extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
+    controller.context = context;
+
     return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: blueLight,

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_movies/app/theme/colors.dart';
 
 // Light theme data
 ThemeData lightThemeData() {
-  return ThemeData.light().copyWith(backgroundColor: Color(0xffffffff));
+  return ThemeData.light().copyWith(backgroundColor: Colors.white);
 }
 
 // Dark theme data
 ThemeData darkThemeData() {
-  return ThemeData.dark().copyWith(backgroundColor: Color(0xff2c3848));
+  return ThemeData.dark().copyWith(backgroundColor: blueDark);
 }

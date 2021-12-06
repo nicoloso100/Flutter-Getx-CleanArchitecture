@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movies/IoC/injector.dart';
+import 'package:flutter_movies/app/core/utils/error_notification.dart';
 import 'package:flutter_movies/app/data/DTOs/search_movie_dto.dart';
 import 'package:flutter_movies/app/domain/entities/movie_cover.dart';
 import 'package:flutter_movies/app/domain/usecases/get_popular_movies.dart';
@@ -25,6 +26,8 @@ class HomeController extends GetxController {
   final prev = ''.obs;
   List<MovieCover> searchResult = [];
 
+  BuildContext? context;
+
   @override
   void onInit() {
     super.onInit();
@@ -45,7 +48,8 @@ class HomeController extends GetxController {
 
   void loadPopularMovies(int pageKey) async {
     var result = await getPopularMovies.call(params: pageKey);
-    result.fold((error) => print(error), (popularList) {
+    result.fold((failure) => showErrorToast(context, failure.message),
+        (popularList) {
       final isLastPage = popularList.length < pageSize;
       if (isLastPage) {
         pagingPopular.appendLastPage(popularList);
@@ -58,7 +62,8 @@ class HomeController extends GetxController {
 
   void loadTopRatedMovies(int pageKey) async {
     var result = await getTopRatedMovies.call(params: pageKey);
-    result.fold((error) => print(error), (topRatedList) {
+    result.fold((failure) => showErrorToast(context, failure.message),
+        (topRatedList) {
       final isLastPage = topRatedList.length < pageSize;
       if (isLastPage) {
         pagingTopRated.appendLastPage(topRatedList);
@@ -74,7 +79,8 @@ class HomeController extends GetxController {
       prev.value = searchController.text;
       var result =
           await searchMovie.call(params: SearchMovieDTO(1, prev.value));
-      result.fold((error) => print(error), (searchList) {
+      result.fold((failure) => showErrorToast(context, failure.message),
+          (searchList) {
         searchResult = searchList;
       });
     }

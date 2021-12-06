@@ -20,7 +20,10 @@ class GetMovieDescription implements UseCase<Movie, int> {
       return actors.fold((actorsFailure) => Left(actorsFailure), (actorsList) {
         List<Actors> actors = [];
         for (var element in actorsList) {
-          var actor = Actors(element.profile_path, element.name ?? 'No name');
+          var image = element.profile_path != null
+              ? '$imagesBase${element.profile_path}'
+              : defaultImage;
+          var actor = Actors(image, element.name ?? 'No name');
           actors.add(actor);
         }
         List<String> genres = [];
@@ -46,10 +49,20 @@ class GetMovieDescription implements UseCase<Movie, int> {
             ? '$imagesBase${movieDetails.backdrop_path}'
             : defaultImage;
 
+        var releaseDate = movieDetails.release_date;
+        var resultDate = 'No date';
+        if (releaseDate != null) {
+          var date = DateTime.tryParse(releaseDate);
+          if (date != null) {
+            resultDate = date.year.toString();
+          }
+        }
+
         var movie = Movie(
             poster,
             movieDetails.homepage ?? '',
             movieDetails.overview ?? '',
+            resultDate,
             actors,
             genres,
             studios,

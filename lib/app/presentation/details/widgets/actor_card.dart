@@ -1,23 +1,21 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_movies/app/core/widgets/rating_bar.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:flutter/material.dart';
 
-class MovieCard extends StatelessWidget {
+class ActorCard extends StatelessWidget {
   final String image;
   final String name;
-  final double rating;
 
-  const MovieCard(
-      {Key? key, required this.image, required this.name, required this.rating})
+  const ActorCard({Key? key, required this.image, required this.name})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10),
-      width: 150,
-      height: 200,
+      margin: EdgeInsets.only(right: 20),
+      width: 60,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
@@ -27,12 +25,12 @@ class MovieCard extends StatelessWidget {
               const Center(child: CircularProgressIndicator()),
               Center(
                 child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
+                    borderRadius: BorderRadius.circular(50),
                     child: FadeInImage.memoryNetwork(
                       placeholder: kTransparentImage,
                       image: image,
-                      width: 150,
-                      height: 190,
+                      width: 50,
+                      height: 50,
                       fit: BoxFit.cover,
                       alignment: Alignment.bottomCenter,
                     )),
@@ -48,10 +46,10 @@ class MovieCard extends StatelessWidget {
               name,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.start,
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 13),
             ),
           ),
-          RatingBar(rating: rating)
         ],
       ),
     );
