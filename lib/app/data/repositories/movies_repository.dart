@@ -97,20 +97,16 @@ class MoviesRepositoryImpl implements MoviesRepository {
   @override
   Future<Either<Failure, List<MovieCoverModel>>> searchMovies(
       String text, int page) async {
-    try {
-      final response = await http.get(
-          Uri.parse('$apiBase$searchMovie?query=$text&page=$page'),
-          headers: {HttpHeaders.authorizationHeader: apiToken});
-      if (response.statusCode == 200) {
-        var list = MoviesListModel.fromJson(jsonDecode(response.body));
-        return Right(list.results);
-      } else {
-        var failure = Failure(
-            "An error occurred while searching the movie, please try again.");
-        return Left(failure);
-      }
-    } catch (e) {
-      return Left(internetFailure);
+    final response = await http.get(
+        Uri.parse('$apiBase$searchMovie?query=$text&page=$page'),
+        headers: {HttpHeaders.authorizationHeader: apiToken});
+    if (response.statusCode == 200) {
+      var list = MoviesListModel.fromJson(jsonDecode(response.body));
+      return Right(list.results);
+    } else {
+      var failure = Failure(
+          "An error occurred while searching the movie, please try again.");
+      return Left(failure);
     }
   }
 }

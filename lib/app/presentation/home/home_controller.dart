@@ -22,7 +22,7 @@ class HomeController extends GetxController {
   late TextEditingController searchController;
 
   static const pageSize = 20;
-  final isDarkMode = false.obs;
+  final isDarkMode = Get.isDarkMode.obs;
   final prev = ''.obs;
   List<MovieCover> searchResult = [];
 
@@ -77,12 +77,14 @@ class HomeController extends GetxController {
   void searchMovieListener() async {
     if (prev.value != searchController.text) {
       prev.value = searchController.text;
-      var result =
-          await searchMovie.call(params: SearchMovieDTO(1, prev.value));
-      result.fold((failure) => showErrorToast(context, failure.message),
-          (searchList) {
-        searchResult = searchList;
-      });
+      if (prev.value.isNotEmpty) {
+        var result =
+            await searchMovie.call(params: SearchMovieDTO(1, prev.value));
+        result.fold((failure) => showErrorToast(context, failure.message),
+            (searchList) {
+          searchResult = searchList;
+        });
+      }
     }
   }
 
