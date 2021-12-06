@@ -10,7 +10,6 @@ void main() {
   Injector.setup();
   runApp(
     GetMaterialApp(
-      title: "Movies",
       initialRoute: AppPages.INITIAL,
       getPages: AppPages.routes,
       theme: lightThemeData(),
