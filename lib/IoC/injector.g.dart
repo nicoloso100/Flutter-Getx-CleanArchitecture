@@ -14,6 +14,7 @@ class _$Injector extends Injector {
       ..registerFactory<MoviesRepository>((c) => MoviesRepositoryImpl())
       ..registerFactory((c) => GetMovieDescription(c<MoviesRepository>()))
       ..registerFactory((c) => GetPopularMovies(c<MoviesRepository>()))
-      ..registerFactory((c) => GetTopRatedMovies(c<MoviesRepository>()));
+      ..registerFactory((c) => GetTopRatedMovies(c<MoviesRepository>()))
+      ..registerFactory((c) => SearchMovie(c<MoviesRepository>()));
   }
 }

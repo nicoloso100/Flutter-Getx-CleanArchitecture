@@ -9,9 +9,9 @@ part of 'collection_model.dart';
 CollectionModel _$CollectionModelFromJson(Map<String, dynamic> json) =>
     CollectionModel(
       id: json['id'] as int,
-      name: json['name'] as String,
-      poster_path: json['poster_path'] as String,
-      backdrop_path: json['backdrop_path'] as String,
+      name: json['name'] as String?,
+      poster_path: json['poster_path'] as String?,
+      backdrop_path: json['backdrop_path'] as String?,
     );
 
 Map<String, dynamic> _$CollectionModelToJson(CollectionModel instance) =>

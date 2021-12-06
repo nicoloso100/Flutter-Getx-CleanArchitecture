@@ -1,20 +1,25 @@
+import 'package:flutter_movies/IoC/injector.dart';
+import 'package:flutter_movies/app/domain/entities/movie.dart';
+import 'package:flutter_movies/app/domain/usecases/get_movie_description.dart';
 import 'package:get/get.dart';
 
 class DetailsController extends GetxController {
-  //TODO: Implement DetailsController
+  final getMovieDescription = Injector.resolve<GetMovieDescription>();
+  late Future<Movie?> movieDetails;
 
-  final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+
+    movieDetails = loadDescription();
   }
 
-  @override
-  void onReady() {
-    super.onReady();
+  Future<Movie?> loadDescription() async {
+    int id = Get.arguments;
+    Movie? details;
+    var result = await getMovieDescription.call(params: id);
+    result.fold(
+        (failure) => print(failure), (description) => details = description);
+    return details;
   }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }

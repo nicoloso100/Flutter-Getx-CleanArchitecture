@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_movies/app/domain/entities/movie.dart';
 
 import 'package:get/get.dart';
 
@@ -12,12 +13,17 @@ class DetailsView extends GetView<DetailsController> {
         title: Text('DetailsView'),
         centerTitle: true,
       ),
-      body: Center(
-        child: Text(
-          'DetailsView is working',
-          style: TextStyle(fontSize: 20),
-        ),
-      ),
+      body: FutureBuilder<Movie?>(
+          future: controller.movieDetails,
+          builder: (BuildContext context, AsyncSnapshot<Movie?> snapshot) {
+            var movieDetails = snapshot.data;
+            if (movieDetails != null) {
+              return Text(movieDetails.name);
+            }
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }),
     );
   }
 }

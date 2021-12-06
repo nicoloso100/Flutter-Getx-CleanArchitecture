@@ -16,7 +16,7 @@ class MoviesRepositoryImpl implements MoviesRepository {
   @override
   Future<Either<Failure, MovieModel>> getMovieDetails(int id) async {
     final response = await http.get(Uri.parse('$apiBase$getDetails$id'),
-        headers: {apiToken: apiToken});
+        headers: {HttpHeaders.authorizationHeader: apiToken});
     if (response.statusCode == 200) {
       var movie = MovieModel.fromJson(jsonDecode(response.body));
       return Right(movie);
@@ -34,7 +34,7 @@ class MoviesRepositoryImpl implements MoviesRepository {
         headers: {HttpHeaders.authorizationHeader: apiToken});
     if (response.statusCode == 200) {
       var actors = CastModel.fromJson(jsonDecode(response.body));
-      return Right(actors.cast);
+      return Right(actors.cast ?? []);
     } else {
       var failure = Failure(
           "An error occurred while getting the movie's credits, please try again.");
@@ -69,6 +69,22 @@ class MoviesRepositoryImpl implements MoviesRepository {
     } else {
       var failure = Failure(
           "An error occurred while getting top rated movies, please try again.");
+      return Left(failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<MovieCoverModel>>> searchMovies(
+      String text, int page) async {
+    final response = await http.get(
+        Uri.parse('$apiBase$searchMovie?query=$text&page=$page'),
+        headers: {HttpHeaders.authorizationHeader: apiToken});
+    if (response.statusCode == 200) {
+      var list = MoviesListModel.fromJson(jsonDecode(response.body));
+      return Right(list.results);
+    } else {
+      var failure = Failure(
+          "An error occurred while searching the movie, please try again.");
       return Left(failure);
     }
   }

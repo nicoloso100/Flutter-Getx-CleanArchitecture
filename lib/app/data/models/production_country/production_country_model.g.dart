@@ -9,13 +9,13 @@ part of 'production_country_model.dart';
 ProductionCountryModel _$ProductionCountryModelFromJson(
         Map<String, dynamic> json) =>
     ProductionCountryModel(
-      iso_3166_1: json['iso_3166_1'] as String,
-      China: json['China'] as String,
+      iso_3166_1: json['iso_3166_1'] as String?,
+      name: json['name'] as String?,
     );
 
 Map<String, dynamic> _$ProductionCountryModelToJson(
         ProductionCountryModel instance) =>
     <String, dynamic>{
       'iso_3166_1': instance.iso_3166_1,
-      'China': instance.China,
+      'name': instance.name,
     };

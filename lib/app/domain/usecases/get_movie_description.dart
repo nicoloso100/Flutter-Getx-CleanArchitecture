@@ -1,4 +1,5 @@
 import 'package:either_dart/either.dart';
+import 'package:flutter_movies/app/core/constants/api.dart';
 import 'package:flutter_movies/app/core/errors/failure.dart';
 import 'package:flutter_movies/app/core/usecase/usecase.dart';
 import 'package:flutter_movies/app/domain/entities/actors.dart';
@@ -19,27 +20,43 @@ class GetMovieDescription implements UseCase<Movie, int> {
       return actors.fold((actorsFailure) => Left(actorsFailure), (actorsList) {
         List<Actors> actors = [];
         for (var element in actorsList) {
-          var actor = Actors(element.profile_path, element.name);
+          var actor = Actors(element.profile_path, element.name ?? 'No name');
           actors.add(actor);
         }
         List<String> genres = [];
-        for (var element in movieDetails.genres) {
-          genres.add(element.name);
+        var genresList = movieDetails.genres;
+        if (genresList != null) {
+          for (var element in genresList) {
+            genres.add(element.name);
+          }
         }
         List<String> studios = [];
-        for (var element in movieDetails.production_companies) {
-          studios.add(element.name);
+        var studiosList = movieDetails.production_companies;
+        if (studiosList != null) {
+          for (var element in studiosList) {
+            studios.add(element.name ?? 'No name');
+          }
         }
+
+        var poster = movieDetails.poster_path != null
+            ? '$imagesBase${movieDetails.poster_path}'
+            : defaultImage;
+
+        var backdrop = movieDetails.backdrop_path != null
+            ? '$imagesBase${movieDetails.backdrop_path}'
+            : defaultImage;
+
         var movie = Movie(
-            movieDetails.poster_path,
-            movieDetails.homepage,
-            movieDetails.overview,
+            poster,
+            movieDetails.homepage ?? '',
+            movieDetails.overview ?? '',
             actors,
             genres,
             studios,
-            movieDetails.backdrop_path,
-            movieDetails.title,
-            movieDetails.vote_average);
+            movieDetails.id,
+            backdrop,
+            movieDetails.title ?? 'No title',
+            movieDetails.vote_average ?? 0);
         return Right(movie);
       });
     });

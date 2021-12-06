@@ -7,18 +7,18 @@ part of 'actor_model.dart';
 // **************************************************************************
 
 ActorModel _$ActorModelFromJson(Map<String, dynamic> json) => ActorModel(
-      adult: json['adult'] as bool,
-      gender: json['gender'] as int,
+      adult: json['adult'] as bool?,
+      gender: json['gender'] as int?,
       id: json['id'] as int,
-      known_for_department: json['known_for_department'] as String,
-      name: json['name'] as String,
-      original_name: json['original_name'] as String,
-      popularity: (json['popularity'] as num).toDouble(),
-      profile_path: json['profile_path'] as String,
-      cast_id: json['cast_id'] as int,
-      character: json['character'] as String,
-      credit_id: json['credit_id'] as String,
-      order: json['order'] as int,
+      known_for_department: json['known_for_department'] as String?,
+      name: json['name'] as String?,
+      original_name: json['original_name'] as String?,
+      popularity: (json['popularity'] as num?)?.toDouble(),
+      profile_path: json['profile_path'] as String?,
+      cast_id: json['cast_id'] as int?,
+      character: json['character'] as String?,
+      credit_id: json['credit_id'] as String?,
+      order: json['order'] as int?,
     );
 
 Map<String, dynamic> _$ActorModelToJson(ActorModel instance) =>

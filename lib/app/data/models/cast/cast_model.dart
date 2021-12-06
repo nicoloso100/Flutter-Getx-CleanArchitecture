@@ -6,9 +6,9 @@ part 'cast_model.g.dart';
 @JsonSerializable()
 class CastModel {
   final int id;
-  final List<ActorModel> cast;
+  final List<ActorModel>? cast;
 
-  CastModel({required this.id, required this.cast});
+  CastModel({required this.id, this.cast});
 
   factory CastModel.fromJson(Map<String, dynamic> json) =>
       _$CastModelFromJson(json);

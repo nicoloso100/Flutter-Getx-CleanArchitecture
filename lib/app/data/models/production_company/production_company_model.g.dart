@@ -10,9 +10,9 @@ ProductionCompanyModel _$ProductionCompanyModelFromJson(
         Map<String, dynamic> json) =>
     ProductionCompanyModel(
       id: json['id'] as int,
-      name: json['name'] as String,
-      logo_path: json['logo_path'] as String,
-      origin_country: json['origin_country'] as String,
+      name: json['name'] as String?,
+      logo_path: json['logo_path'] as String?,
+      origin_country: json['origin_country'] as String?,
     );
 
 Map<String, dynamic> _$ProductionCompanyModelToJson(

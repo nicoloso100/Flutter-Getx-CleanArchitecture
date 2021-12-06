@@ -10,6 +10,6 @@ class Movie extends MovieCover {
   final List<String> studios;
 
   Movie(this.poster, this.link, this.description, this.actors, this.genres,
-      this.studios, backdrop, name, rating)
-      : super(backdrop, name, rating);
+      this.studios, int id, String backdrop, String name, double rating)
+      : super(id, backdrop, name, rating);
 }

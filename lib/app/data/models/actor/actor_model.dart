@@ -4,32 +4,32 @@ part 'actor_model.g.dart';
 
 @JsonSerializable()
 class ActorModel {
-  final bool adult;
-  final int gender;
+  final bool? adult;
+  final int? gender;
   final int id;
-  final String known_for_department;
-  final String name;
-  final String original_name;
-  final double popularity;
-  final String profile_path;
-  final int cast_id;
-  final String character;
-  final String credit_id;
-  final int order;
+  final String? known_for_department;
+  final String? name;
+  final String? original_name;
+  final double? popularity;
+  final String? profile_path;
+  final int? cast_id;
+  final String? character;
+  final String? credit_id;
+  final int? order;
 
   ActorModel(
-      {required this.adult,
-      required this.gender,
+      {this.adult,
+      this.gender,
       required this.id,
-      required this.known_for_department,
-      required this.name,
-      required this.original_name,
-      required this.popularity,
-      required this.profile_path,
-      required this.cast_id,
-      required this.character,
-      required this.credit_id,
-      required this.order});
+      this.known_for_department,
+      this.name,
+      this.original_name,
+      this.popularity,
+      this.profile_path,
+      this.cast_id,
+      this.character,
+      this.credit_id,
+      this.order});
 
   factory ActorModel.fromJson(Map<String, dynamic> json) =>
       _$ActorModelFromJson(json);

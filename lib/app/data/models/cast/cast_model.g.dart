@@ -8,8 +8,8 @@ part of 'cast_model.dart';
 
 CastModel _$CastModelFromJson(Map<String, dynamic> json) => CastModel(
       id: json['id'] as int,
-      cast: (json['cast'] as List<dynamic>)
-          .map((e) => ActorModel.fromJson(e as Map<String, dynamic>))
+      cast: (json['cast'] as List<dynamic>?)
+          ?.map((e) => ActorModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

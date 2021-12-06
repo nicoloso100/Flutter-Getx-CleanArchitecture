@@ -7,6 +7,8 @@ import 'package:flutter_movies/app/data/models/movie_cover/movie_cover_model.dar
 abstract class MoviesRepository {
   Future<Either<Failure, List<MovieCoverModel>>> getPopularMovies(int page);
   Future<Either<Failure, List<MovieCoverModel>>> getTopRatedMovies(int page);
+  Future<Either<Failure, List<MovieCoverModel>>> searchMovies(
+      String text, int page);
   Future<Either<Failure, MovieModel>> getMovieDetails(int id);
   Future<Either<Failure, List<ActorModel>>> getMovieDetailsActors(int id);
 }

@@ -1,14 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_movies/app/domain/entities/movie_cover.dart';
+import 'package:flutter_movies/app/presentation/home/home_controller.dart';
+import 'package:flutter_movies/app/presentation/home/widgets/movie_card.dart';
 import 'package:get/get_utils/src/extensions/context_extensions.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class MoviesList extends StatelessWidget {
-  final Widget popularList;
-  final Widget topRated;
+  final HomeController controller;
 
-  const MoviesList(
-      {Key? key, required this.popularList, required this.topRated})
-      : super(key: key);
+  const MoviesList({Key? key, required this.controller}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +36,23 @@ class MoviesList extends StatelessWidget {
                     Container(
                       height: 20,
                     ),
-                    popularList
+                    Container(
+                      height: 300,
+                      child: PagedListView<int, MovieCover>(
+                        scrollDirection: Axis.horizontal,
+                        pagingController: controller.pagingPopular,
+                        builderDelegate: PagedChildBuilderDelegate<MovieCover>(
+                            itemBuilder: (context, item, index) => InkWell(
+                                  onTap: () =>
+                                      controller.onSelectMovie(item.id),
+                                  child: MovieCard(
+                                    image: item.backdrop,
+                                    name: item.name,
+                                    rating: item.rating,
+                                  ),
+                                )),
+                      ),
+                    )
                   ],
                 ),
                 Container(
@@ -51,7 +68,19 @@ class MoviesList extends StatelessWidget {
                     Container(
                       height: 20,
                     ),
-                    topRated
+                    Container(
+                      height: 300,
+                      child: PagedListView<int, MovieCover>(
+                        scrollDirection: Axis.horizontal,
+                        pagingController: controller.pagingTopRated,
+                        builderDelegate: PagedChildBuilderDelegate<MovieCover>(
+                          itemBuilder: (context, item, index) => MovieCard(
+                              image: item.backdrop,
+                              name: item.name,
+                              rating: item.rating),
+                        ),
+                      ),
+                    )
                   ],
                 )
               ],

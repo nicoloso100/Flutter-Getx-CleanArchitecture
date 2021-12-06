@@ -1,26 +1,87 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_movies/IoC/injector.dart';
+import 'package:flutter_movies/app/data/DTOs/search_movie_dto.dart';
+import 'package:flutter_movies/app/domain/entities/movie_cover.dart';
 import 'package:flutter_movies/app/domain/usecases/get_popular_movies.dart';
+import 'package:flutter_movies/app/domain/usecases/get_top_rated_movies.dart';
+import 'package:flutter_movies/app/domain/usecases/search_movie.dart';
+import 'package:flutter_movies/app/routes/app_pages.dart';
 import 'package:get/get.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class HomeController extends GetxController {
   final getPopularMovies = Injector.resolve<GetPopularMovies>();
+  final getTopRatedMovies = Injector.resolve<GetTopRatedMovies>();
+  final searchMovie = Injector.resolve<SearchMovie>();
 
-  final isDarkMode = false.obs;
+  final PagingController<int, MovieCover> pagingPopular =
+      PagingController(firstPageKey: 1);
+  final PagingController<int, MovieCover> pagingTopRated =
+      PagingController(firstPageKey: 1);
   late TextEditingController searchController;
+
+  static const pageSize = 20;
+  final isDarkMode = false.obs;
+  final prev = ''.obs;
+  List<MovieCover> searchResult = [];
 
   @override
   void onInit() {
     super.onInit();
     searchController = TextEditingController();
-    print("holaaa");
-    loadPopularMovies();
+    pagingPopular.addPageRequestListener((pageKey) {
+      loadPopularMovies(pageKey);
+    });
+    pagingTopRated.addPageRequestListener((pageKey) {
+      loadTopRatedMovies(pageKey);
+    });
+
+    pagingTopRated.addPageRequestListener((pageKey) {
+      loadTopRatedMovies(pageKey);
+    });
+
+    searchController.addListener(searchMovieListener);
   }
 
-  void loadPopularMovies() async {
-    var result = await getPopularMovies.call(params: 1);
-    result.fold(
-        (error) => print(error), (popularList) => print(popularList[0].name));
+  void loadPopularMovies(int pageKey) async {
+    var result = await getPopularMovies.call(params: pageKey);
+    result.fold((error) => print(error), (popularList) {
+      final isLastPage = popularList.length < pageSize;
+      if (isLastPage) {
+        pagingPopular.appendLastPage(popularList);
+      } else {
+        final nextPageKey = pageKey + popularList.length;
+        pagingPopular.appendPage(popularList, nextPageKey);
+      }
+    });
+  }
+
+  void loadTopRatedMovies(int pageKey) async {
+    var result = await getTopRatedMovies.call(params: pageKey);
+    result.fold((error) => print(error), (topRatedList) {
+      final isLastPage = topRatedList.length < pageSize;
+      if (isLastPage) {
+        pagingTopRated.appendLastPage(topRatedList);
+      } else {
+        final nextPageKey = pageKey + topRatedList.length;
+        pagingTopRated.appendPage(topRatedList, nextPageKey);
+      }
+    });
+  }
+
+  void searchMovieListener() async {
+    if (prev.value != searchController.text) {
+      prev.value = searchController.text;
+      var result =
+          await searchMovie.call(params: SearchMovieDTO(1, prev.value));
+      result.fold((error) => print(error), (searchList) {
+        searchResult = searchList;
+      });
+    }
+  }
+
+  void onSelectMovie(int id) {
+    Get.toNamed(Routes.DETAILS, arguments: id);
   }
 
   @override

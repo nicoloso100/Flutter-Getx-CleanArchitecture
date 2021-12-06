@@ -4,10 +4,10 @@ part 'production_country_model.g.dart';
 
 @JsonSerializable()
 class ProductionCountryModel {
-  final String iso_3166_1;
-  final String China;
+  final String? iso_3166_1;
+  final String? name;
 
-  ProductionCountryModel({required this.iso_3166_1, required this.China});
+  ProductionCountryModel({this.iso_3166_1, this.name});
 
   factory ProductionCountryModel.fromJson(Map<String, dynamic> json) =>
       _$ProductionCountryModelFromJson(json);
