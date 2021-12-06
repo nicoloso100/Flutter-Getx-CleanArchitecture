@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.flutter_movies.flutter_movies">
+   <!-- Required to fetch data from the internet. -->
+   <uses-permission android:name="android.permission.INTERNET" />
    <application
         android:label="flutter_movies"
         android:icon="@mipmap/ic_launcher">
