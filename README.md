@@ -1,16 +1,44 @@
-# flutter_movies
+# Flutter Movies
 
-A new Flutter project.
+Flutter Movies is an application developed with Flutter, Getx and Clean Architecture.
+In it you can see the list of popular movies, the top rated ones and see the description of each one.
+This application connects to The Movie DB API.
 
-## Getting Started
+<img src="https://i.imgur.com/PrXYj77.png" alt="drawing" width="300"/>
+<img src="https://i.imgur.com/BWpR7sP.png" alt="drawing" width="300"/>
+  
 
-This project is a starting point for a Flutter application.
+# Clean Architecture
 
-A few resources to get you started if this is your first Flutter project:
+![enter image description here](https://miro.medium.com/max/1400/1*WWcsH7w4vAmROLJGXDogFw.png)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+In this application, the Clean Architecture concept was implemented for the structuring of the project.
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+The Entities, Use Cases, Controllers Core and Presentation layers were implemented.
+
+The domain entities were:
+
+ - Actors: The actors of a movie
+ - Movie Cover: The summarized version of the movie information.
+ - Movie: All the movie information
+
+# GetX
+
+![enter image description here](https://res.cloudinary.com/practicaldev/image/fetch/s--J8e3KWw4--/c_imagga_scale,f_auto,fl_progressive,h_1080,q_auto,w_1080/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/l10fq2kiw28o3mok3v1m.jpg)
+
+GetX was implemented for navigation and state management.
+
+The application has 2 screens:
+
+ - Home
+ - Details
+
+The navigation between them was done through GetX and configured in the Routes folder.
+
+# Other packages
+
+The following packages were also used in the application:
+
+ - [Material Design - Flutter](https://material.io/develop/flutter): system of guidelines, components, and tools for Flutter.
+ - [json_serializable](https://pub.dev/packages/json_serializable): Provides Dart Build System builders for handling JSON.
+ - [Kiwi](https://pub.dev/packages/kiwi): A simple yet efficient IoC container for Dart and Flutter.
